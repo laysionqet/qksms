@@ -24,6 +24,7 @@ import com.android.volley.RequestQueue;
 import com.moez.QKSMS.QKSMSApp;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.LiveViewManager;
+import com.moez.QKSMS.common.utils.ViewUtils;
 import com.moez.QKSMS.enums.QKPreference;
 import com.moez.QKSMS.common.utils.ColorUtils;
 import com.moez.QKSMS.ui.ThemeManager;
@@ -90,10 +91,10 @@ public abstract class QKActivity extends AppCompatActivity {
         LiveViewManager.registerView(QKPreference.THEME, this, key -> {
             mToolbar.setBackgroundColor(ThemeManager.getColor());
 
-            if (mStatusTintEnabled) {
+            if (mStatusTintEnabled && Build.VERSION.SDK_INT >= 21) {
                 getWindow().setStatusBarColor(ColorUtils.darken(ThemeManager.getColor()));
             }
-            if (mNavigationTintEnabled) {
+            if (mNavigationTintEnabled && Build.VERSION.SDK_INT >= 21) {
                 getWindow().setNavigationBarColor(ColorUtils.darken(ThemeManager.getColor()));
             }
         });
@@ -111,6 +112,7 @@ public abstract class QKActivity extends AppCompatActivity {
                     break;
             }
             ((QKTextView) findViewById(R.id.toolbar_title)).setTextColor(ThemeManager.getTextOnColorPrimary());
+            ViewUtils.requestWindowLightStatusBar(getWindow(), ThemeManager.getShouldTryUseLightStatusBar());
         });
     }
 

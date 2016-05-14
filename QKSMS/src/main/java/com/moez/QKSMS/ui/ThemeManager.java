@@ -16,6 +16,7 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Window;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.LinearLayout;
 import com.moez.QKSMS.R;
@@ -217,6 +218,8 @@ public class ThemeManager {
     private static int mBackgroundColor;
     private static Theme mTheme;
 
+    private static boolean mTryUseLightStatusBar;
+
     private static int mTextOnColorPrimary;
     private static int mTextOnColorSecondary;
     private static int mTextOnBackgroundPrimary;
@@ -303,6 +306,7 @@ public class ThemeManager {
                 R.color.theme_dark_text_primary : R.color.theme_light_text_primary);
         mTextOnColorSecondary = mResources.getColor(isColorDarkEnough(mColor) ?
                 R.color.theme_dark_text_secondary : R.color.theme_light_text_secondary);
+        mTryUseLightStatusBar = !isColorDarkEnough(mColor);
 
         setSentBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOR_SENT, true));
         setReceivedBubbleColored(mPrefs.getBoolean(SettingsFragment.COLOR_RECEIVED, false));
@@ -366,6 +370,10 @@ public class ThemeManager {
 
     public static int getBackgroundColor() {
         return mBackgroundColor;
+    }
+
+    public static boolean getShouldTryUseLightStatusBar() {
+        return mTryUseLightStatusBar;
     }
 
     public static int getTextOnColorPrimary() {

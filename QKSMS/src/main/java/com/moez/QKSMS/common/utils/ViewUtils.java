@@ -1,6 +1,8 @@
 package com.moez.QKSMS.common.utils;
 
+import android.os.Build;
 import android.view.View;
+import android.view.Window;
 
 public class ViewUtils {
 
@@ -22,4 +24,21 @@ public class ViewUtils {
 
         return !(x < vx || x > vx + vw || y < vy || y > vy + vh);
     }
+
+    public static void requestWindowLightStatusBar(Window window, final boolean enabled) {
+        if (Build.VERSION.SDK_INT < 23) {
+            return;
+        }
+        if (null == window) {
+            return;
+        }
+        final View decorView = window.getDecorView();
+        final int visibility = decorView.getSystemUiVisibility();
+        if (enabled) {
+            decorView.setSystemUiVisibility(visibility | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        } else {
+            decorView.setSystemUiVisibility(visibility & (~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR));
+        }
+    }
+
 }

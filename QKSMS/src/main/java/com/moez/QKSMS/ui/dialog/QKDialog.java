@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.utils.Units;
+import com.moez.QKSMS.common.utils.ViewUtils;
 import com.moez.QKSMS.ui.ThemeManager;
 import com.moez.QKSMS.ui.base.QKActivity;
 import com.moez.QKSMS.ui.view.QKTextView;
@@ -85,6 +86,8 @@ public class QKDialog extends DialogFragment {
         window.requestFeature(Window.FEATURE_NO_TITLE);
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        ViewUtils.requestWindowLightStatusBar(window, ThemeManager.getShouldTryUseLightStatusBar());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_material, null);
