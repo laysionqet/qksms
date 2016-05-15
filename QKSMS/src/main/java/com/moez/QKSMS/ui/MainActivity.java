@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.google.android.mms.pdu_alt.PduHeaders;
+import com.moez.QKSMS.BuildConfig;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.ConversationPrefsHelper;
 import com.moez.QKSMS.common.DialogHelper;
@@ -137,6 +138,7 @@ public class MainActivity extends QKActivity implements SlidingMenu.SlidingMenuL
         });
 
         //Adds a small/non intrusive snackbar that asks the user to rate the app
+        if (BuildConfig.DEBUG) return;
         SnackEngage.from(this).withSnack(new QKRateSnack().withDuration(BaseSnack.DURATION_LONG))
                 .build().engageWhenAppropriate();
     }
