@@ -112,8 +112,13 @@ public abstract class QKActivity extends AppCompatActivity {
                     break;
             }
             ((QKTextView) findViewById(R.id.toolbar_title)).setTextColor(ThemeManager.getTextOnColorPrimary());
-            ViewUtils.requestWindowLightStatusBar(getWindow(), ThemeManager.getShouldTryUseLightStatusBar());
+            ViewUtils.requestWindowLightStatusBar(getWindow(),
+                shouldRequestWindowLightStatusBar() && ThemeManager.getShouldTryUseLightStatusBar());
         });
+    }
+
+    protected boolean shouldRequestWindowLightStatusBar() {
+        return true;
     }
 
     protected void showBackButton(boolean show) {

@@ -38,6 +38,10 @@ public abstract class QKPopupActivity extends QKActivity {
         }
     }
 
+    @Override protected boolean shouldRequestWindowLightStatusBar() {
+        return false;
+    }
+
     @Override
     protected int getThemeRes() {
         switch (ThemeManager.getTheme()) {
