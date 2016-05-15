@@ -83,7 +83,7 @@ buildscript {
     }
 }
 
-String supportLibraryVersion = '23.3.0'
+String supportLibraryVersion = '23.4.0'
 
 dependencies {
     // Open source libraries
