@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.melnykov.fab.FloatingActionButton;
+import com.moez.QKSMS.BuildConfig;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.BlockedConversationHelper;
 import com.moez.QKSMS.common.DialogHelper;
@@ -175,9 +176,21 @@ public class ConversationListFragment extends QKFragment implements LoaderManage
             menu.findItem(R.id.menu_mark_read).setTitle(getUnreadWeight() >= 0 ? R.string.menu_mark_read : R.string.menu_mark_unread);
             menu.findItem(R.id.menu_block).setTitle(getBlockedWeight() > 0 ? R.string.menu_unblock_conversations : R.string.menu_block_conversations);
             menu.findItem(R.id.menu_delete_failed).setVisible(doSomeHaveErrors());
+
+            if (BuildConfig.DEBUG) {
+                menu.findItem(R.id.menu_done).setVisible(false);
+            }
         } else {
             inflater.inflate(R.menu.conversations, menu);
             mContext.setTitle(mShowBlocked ? R.string.title_blocked : R.string.title_conversation_list);
+            if (BuildConfig.DEBUG) {
+                menu.findItem(R.id.menu_changelog).setVisible(false);
+                menu.findItem(R.id.menu_donate).setVisible(false);
+
+                MenuItem iSettings = menu.findItem(R.id.menu_settings);
+                iSettings.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+                iSettings.setIcon(R.drawable.ic_settings);
+            }
 
             mBlockedItem = menu.findItem(R.id.menu_blocked);
             BlockedConversationHelper.bindBlockedMenuItem(mContext, mPrefs, mBlockedItem, mShowBlocked);

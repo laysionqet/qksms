@@ -29,6 +29,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.mariussoft.endlessjabber.sdk.EndlessJabberInterface;
+import com.moez.QKSMS.BuildConfig;
 import com.moez.QKSMS.R;
 import com.moez.QKSMS.common.AnalyticsManager;
 import com.moez.QKSMS.common.DialogHelper;
@@ -738,8 +739,11 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             mContext = (MainActivity) context;
             mPrefs = mContext.getPrefs();
         }
-
-        inflater.inflate(R.menu.settings, menu);
+        if (BuildConfig.DEBUG) {
+            menu.clear();
+        } else {
+            inflater.inflate(R.menu.settings, menu);
+        }
         mContext.setTitle(R.string.title_settings);
     }
 }
