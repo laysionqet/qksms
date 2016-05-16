@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.drm.DrmManagerClient;
 import android.location.Country;
+import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.provider.SearchRecentSuggestions;
@@ -35,6 +36,7 @@ import com.android.mms.util.RateController;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.moez.QKSMS.common.AnalyticsManager;
+import com.moez.QKSMS.common.DonationManager;
 import com.moez.QKSMS.common.LifecycleHandler;
 import com.moez.QKSMS.common.LiveViewManager;
 import com.moez.QKSMS.common.google.DraftCache;
@@ -65,6 +67,7 @@ public class QKSMSAppBase extends MultiDexApplication {
     private ThumbnailManager mThumbnailManager;
     private DrmManagerClient mDrmManagerClient;
     private RefWatcher refWatcher;
+    private int mActivityCounter;
 
     @Override
     public void onCreate() {
@@ -79,6 +82,20 @@ public class QKSMSAppBase extends MultiDexApplication {
         }
         UIMemoryRecycler.keepEyesOnDestroyedActivity(this);
         IMMLeaks.fixFocusedViewLeak(this);
+        registerActivityLifecycleCallbacks(new ActivityLifeCycleCallbacksAdapter() {
+            @Override public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                super.onActivityCreated(activity, savedInstanceState);
+                ++mActivityCounter;
+            }
+
+            @Override public void onActivityDestroyed(Activity activity) {
+                super.onActivityDestroyed(activity);
+                mActivityCounter = Math.min(mActivityCounter-1, 0);
+                if (mActivityCounter <= 0) {
+                    DonationManager.clearInstance();
+                }
+            }
+        });
 
         sQKSMSApp = this;
 
