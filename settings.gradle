@@ -1,1 +1,3 @@
-include ':QKSMS'
+include ':QKSMS', ':LIBSUPPORT'
+
+project(':LIBSUPPORT').projectDir = new File('LibSupportUtilForAndroid')

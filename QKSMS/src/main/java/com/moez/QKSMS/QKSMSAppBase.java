@@ -18,6 +18,7 @@
 package com.moez.QKSMS;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.drm.DrmManagerClient;
@@ -48,6 +49,9 @@ import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
 import java.util.Locale;
+import moe.laysionqet.support.app.ActivityLifeCycleCallbacksAdapter;
+import moe.laysionqet.support.utils.memory.leak.anti.IMMLeaks;
+import moe.laysionqet.support.utils.memory.leak.anti.UIMemoryRecycler;
 
 public class QKSMSAppBase extends MultiDexApplication {
     public static final String LOG_TAG = "Mms";
@@ -73,6 +77,8 @@ public class QKSMSAppBase extends MultiDexApplication {
             StrictMode.setThreadPolicy(
                     new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
         }
+        UIMemoryRecycler.keepEyesOnDestroyedActivity(this);
+        IMMLeaks.fixFocusedViewLeak(this);
 
         sQKSMSApp = this;
 

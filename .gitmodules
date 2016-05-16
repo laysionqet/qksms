@@ -1,0 +1,3 @@
+[submodule "LibSupportUtilForAndroid"]
+	path = LibSupportUtilForAndroid
+	url = git@github.com:laysionqet/LibSupportUtilForAndroid.git
